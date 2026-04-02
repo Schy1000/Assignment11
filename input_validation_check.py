@@ -19,6 +19,9 @@ def age_check(age):
         raise TypeError("Age must be an integer") # raises error if wrong type
     if age < 7 or age > 100:
         # setting a reasonable range because the game is supposedly rated 8+
+# 1st Security issue: the code reads "age <7 or age > 100" which means that if the player is 7 years old, they can play, 
+# but the game is rated 8+. This is a contradiction to the rule that players must be at least 8 years old.
+# I beleive this falls under an unsafe assmption because the code assumes that 7 year olds can play, which is not the case.
         raise ValueError("That age is either too young or too old to play (ages 8-100)")
     # Error from outside reasonable range
 def x_axis_check (x_cordinates):
@@ -30,6 +33,9 @@ def x_axis_check (x_cordinates):
     if x_cordinates < 0 or x_cordinates > 10:
         # if statement to ensure the input is reasonable
         raise ValueError("X coordinates have to be greater than 0 and less than 10")
+# 2nd security issue: the code reads "x_cordinates < 0 or x_cordinates > 10" which means that if the player inputs 0 or 10,
+# it will raise an error, but in a game of battleship, the coordinates typically range from 0 to 9. This is a contradiction to the standard rules of battleship where coordinates can be from 0 to 9.
+# I believe this falls under an unsafe assumption because the code assumes that 0 and 10
 def y_axis_check (y_coordinates):
     """ This function checks the y input of a player's guess"""
     if not isinstance(y_coordinates, str): # if statement ensuring the input is a string
@@ -65,7 +71,7 @@ def main():
         y_axis_check(y_guess) # calls on helper function and validates it or yields an error
         proceed = str(input("want to continue?")) # provides option to break the game loop
         if proceed.lower() == "no": # if statement for breaking the loop
-            game = False # breaks the loop
+            game = False # breaks the loop.
 
     print("This code was programmed by Sean Hegarty on February 5 2026. " +
     "The program validates 3 inputs and uses Pylint static analyser. " +
